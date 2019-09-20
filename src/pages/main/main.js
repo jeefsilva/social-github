@@ -2,17 +2,28 @@ import React, { Component } from 'react';
 import api from '../../services/api';
 
 export default class Main extends Component {
+    state = {
+        users: []
+    };
+    
     componentDidMount() {
-        this.loadProducts();
+        this.loadUsers();
     };
 
-    loadProducts = async () => {
+    loadUsers = async () => {
         const response = await api.get("/users");
 
-        console.log(response);
+        this.setState({ users: response.data });
+        console.log(response.data);
     };
     
     render() {
-        return <h1>Maaain</h1>
+        return (
+            <div className="user-list">
+                {this.state.users.map(user => (
+                    <h2 key={user.id}> {user.login}</h2>
+                ))}
+            </div>
+        )
     };
 }
