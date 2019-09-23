@@ -10,6 +10,7 @@ import TextField from "@material-ui/core/TextField";
 
 
 export default class Main extends Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -57,10 +58,6 @@ export default class Main extends Component {
       this.loadLocalUsers();
       console.log ("Está usando o Local Storage")
     }
-  };
-
-  removePlayer(id) {
-    console.log(id);
   };
 
   loadLocalUsers = async () => {
