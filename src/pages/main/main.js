@@ -4,13 +4,11 @@ import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import Icon from "@material-ui/core/Icon";
 import Grid from "@material-ui/core/Grid";
-import styles from './main.module.scss';
+import styles from "./main.module.scss";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 
-
 export default class Main extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -23,43 +21,49 @@ export default class Main extends Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-  };
+  }
 
   handleChange(event) {
     this.setState({ value: event.target.value });
-  };
+  }
 
   handleSubmit(event) {
     event.preventDefault();
     this.loadProfile();
-  };
+  }
 
   loadProfile = async () => {
     var userLogin = this.state.value;
-    const profiles = await api.get(`/users/${userLogin}`, {
-      auth: {
-        username: "testvoxus",
-        password: "258webVOXUS"
-      }
-    });
-    console.log(profiles.data);
-    localStorage.setItem("list_profiles", JSON.stringify(profiles.data));
-    this.setState({
-      profiles: JSON.parse(localStorage.getItem("list_profiles"))
-    });
+
+    try {
+      const profiles = await api.get(`/users/${userLogin}`, {
+        auth: {
+          username: "testvoxus",
+          password: "258webVOXUS"
+        }
+      });
+      this.state.links.unshift(profiles.data);
+      console.log(this.state.links);
+      localStorage.setItem("list_users", JSON.stringify(this.state.links));
+      this.setState({ links: JSON.parse(localStorage.getItem("list_users")) });
+    } catch {
+      alert("Usuário Inválido");
+    }
     //load dos dados da API via input pelo nome de usuário
   };
+
+  
 
   componentDidMount() {
     var local = JSON.parse(localStorage.getItem("list_users"));
     if (local === null) {
       this.loadUsers();
-      console.log ("Está usando a API")
+      console.log("Está usando a API");
     } else {
       this.loadLocalUsers();
-      console.log ("Está usando o Local Storage")
+      console.log("Está usando o Local Storage");
     } //loop para ver se existe algum dado na localStorage
-  };
+  }
 
   loadLocalUsers = async () => {
     this.setState({ links: JSON.parse(localStorage.getItem("list_users")) });
@@ -95,7 +99,7 @@ export default class Main extends Component {
     //load dos dados da API do github
   };
 
-
+ 
 
   render() {
     const { links } = this.state;
@@ -104,7 +108,11 @@ export default class Main extends Component {
         <Grid container className={styles.header} justify="center">
           <header id="main-header" className={styles.header}>
             <div className={styles.flexCenter}>
-              <img className={styles.logo} alt="logo" src="../../assets/logo.svg" />
+              <img
+                className={styles.logo}
+                alt="logo"
+                src="../../assets/logo.svg"
+              />
               <div className={`${styles.addSection} ${styles.flexCenter}`}>
                 <TextField
                   className={styles.userInput}
@@ -141,12 +149,19 @@ export default class Main extends Component {
                 </a>
               </div>
 
-              <img className={styles.avatar} alt="teste" src={link.avatar_url} />
+              <img
+                className={styles.avatar}
+                alt="teste"
+                src={link.avatar_url}
+              />
 
               <Typography className={styles.disabled} variant="subtitle1">
                 Name
               </Typography>
-              <Typography variant="h5" className={`${styles.name} ${styles.textHeight}`}>
+              <Typography
+                variant="h5"
+                className={`${styles.name} ${styles.textHeight}`}
+              >
                 {" "}
                 {link.name}
               </Typography>
@@ -155,7 +170,10 @@ export default class Main extends Component {
                 Blog
               </Typography>
               <a rel="noopener noreferrer" href={link.blog} target="_blank">
-                <Typography variant="body1" className={`${styles.blog} ${styles.textHeight}`}>
+                <Typography
+                  variant="body1"
+                  className={`${styles.blog} ${styles.textHeight}`}
+                >
                   {" "}
                   {link.blog}{" "}
                 </Typography>
@@ -163,7 +181,10 @@ export default class Main extends Component {
               <Typography className={styles.disabled} variant="subtitle2">
                 Location
               </Typography>
-              <Typography variant="body1" className={`${styles.location} ${styles.textHeight}`}>
+              <Typography
+                variant="body1"
+                className={`${styles.location} ${styles.textHeight}`}
+              >
                 {" "}
                 {link.location}{" "}
               </Typography>
@@ -172,7 +193,10 @@ export default class Main extends Component {
                   <Typography className={styles.disabled} variant="subtitle2">
                     Public Repos
                   </Typography>
-                  <Typography variant="body1" className={`${styles.repos} ${styles.textHeight}`}>
+                  <Typography
+                    variant="body1"
+                    className={`${styles.repos} ${styles.textHeight}`}
+                  >
                     {" "}
                     {link.public_repos}{" "}
                   </Typography>
@@ -181,7 +205,10 @@ export default class Main extends Component {
                   <Typography className={styles.disabled} variant="subtitle2">
                     Followers
                   </Typography>
-                  <Typography variant="body1" className={`${styles.followers} ${styles.textHeight}`}>
+                  <Typography
+                    variant="body1"
+                    className={`${styles.followers} ${styles.textHeight}`}
+                  >
                     {" "}
                     {link.followers}{" "}
                   </Typography>
