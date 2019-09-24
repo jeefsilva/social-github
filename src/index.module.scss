@@ -15,33 +15,33 @@
   display: flex;
 }
 
-.flex-space-around {
+.flexSpaceAround {
   display: flex;
   justify-content: space-around;
 }
 
-.flex-space-between {
+.flexSpaceBetween {
   display: flex;
   justify-content: space-between;
 }
 
-.flex-center {
+.flexCenter {
   display: flex;
   align-items: center;
 }
 
-.flex-column {
+.flexColumn {
   display: flex;
   flex-direction: column;
 }
 
-.flex-column-center {
+.flexColumnCenter {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.flex-wrap {
+.flexWrap {
   display: flex;
   flex-wrap: wrap;
 }

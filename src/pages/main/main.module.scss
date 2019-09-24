@@ -1,0 +1,74 @@
+@import '../../index.module.scss';
+
+.grid {
+  width: 1320px !important;
+}
+
+.logo {
+  width: 196px;
+  height: 35px;
+  margin: 72px 636px 53px 12px;
+}
+
+.addSection {
+  margin: 68px 12px 16px 0;
+}
+.userInput {
+  width: 320px;
+  margin-right: 12px;
+}
+.addButton {
+  width: 120px;
+  height: 36px;
+  color: white;
+  background: rgba(0, 0, 0, 0.87);
+  border-radius: 200px;
+}
+
+.line {
+  margin-bottom: 88px;
+}
+
+.card {
+  width: 270px;
+  height: 600px;
+  padding: 12px 20px 20px 20px;
+  margin-right: 60px;
+  margin-bottom: 32px;
+  @extend .flexColumn;
+}
+.avatar {
+  width: 230px;
+  height: 220px;
+  margin: 8px 0 12px 0;
+}
+
+.icon {
+  color: black;
+}
+
+.name,
+.blog {
+  margin-bottom: 8px !important;
+}
+
+.location {
+  margin-bottom: 16px;
+}
+
+.marginRepos {
+  margin-right: 67px;
+}
+
+.line {
+  margin: 16px 0 21px 0;
+}
+
+.textHeight {
+  height: 28px;
+}
+
+.buttonReset {
+  color: #ff0c3e;
+  margin-bottom: 40px;
+}

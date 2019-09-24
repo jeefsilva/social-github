@@ -1,10 +1,10 @@
 import React from "react";
-import "./index.scss";
+import styles from "./index.module.scss";
 import Main from "./pages/main/main";
 
 
 const App = () => (
-  <div className="App">
+  <div className={styles.App}>
     <Main />
   </div>
 );
