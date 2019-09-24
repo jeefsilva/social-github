@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import api from "../../services/api";
+import { api } from "../../services/api";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import Icon from "@material-ui/core/Icon";
@@ -47,6 +47,7 @@ export default class Main extends Component {
     this.setState({
       profiles: JSON.parse(localStorage.getItem("list_profiles"))
     });
+    //load dos dados da API via input pelo nome de usuário
   };
 
   componentDidMount() {
@@ -57,11 +58,12 @@ export default class Main extends Component {
     } else {
       this.loadLocalUsers();
       console.log ("Está usando o Local Storage")
-    }
+    } //loop para ver se existe algum dado na localStorage
   };
 
   loadLocalUsers = async () => {
     this.setState({ links: JSON.parse(localStorage.getItem("list_users")) });
+    //carrega os usuários do localStorage
   };
 
   loadUsers = async () => {
@@ -90,6 +92,7 @@ export default class Main extends Component {
     }
     localStorage.setItem("list_users", JSON.stringify(collection));
     this.setState({ links: JSON.parse(localStorage.getItem("list_users")) });
+    //load dos dados da API do github
   };
 
 
