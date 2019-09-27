@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { api } from "../../services/api";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import Icon from "@material-ui/core/Icon";
@@ -7,6 +6,7 @@ import Grid from "@material-ui/core/Grid";
 import styles from "./main.module.scss";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
+import { loadProfile, loadUsers } from "../../services/api";
 
 export default class Main extends Component {
   constructor(props) {
@@ -29,77 +29,24 @@ export default class Main extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    this.loadProfile();
+    loadProfile();
   }
 
-  loadProfile = async () => {
-    var userLogin = this.state.value;
-
-    try {
-      const profiles = await api.get(`/users/${userLogin}`, {
-        auth: {
-          username: "testvoxus",
-          password: "258webVOXUS"
-        }
-      });
-      this.state.links.unshift(profiles.data);
-      console.log(this.state.links);
-      localStorage.setItem("list_users", JSON.stringify(this.state.links));
-      this.setState({ links: JSON.parse(localStorage.getItem("list_users")) });
-    } catch {
-      alert("Usuário Inválido");
-    }
-    //load dos dados da API via input pelo nome de usuário
-  };
-
-  
-
-  componentDidMount() {
+  pullUser = async () => {
     var local = JSON.parse(localStorage.getItem("list_users"));
     if (local === null) {
-      this.loadUsers();
+      await loadUsers();
+      this.setState({ links: JSON.parse(localStorage.getItem("list_users")) });
       console.log("Está usando a API");
     } else {
-      this.loadLocalUsers();
+      this.setState({ links: JSON.parse(localStorage.getItem("list_users")) });
       console.log("Está usando o Local Storage");
     } //loop para ver se existe algum dado na localStorage
+  };
+
+  componentDidMount() {
+    this.pullUser();
   }
-
-  loadLocalUsers = async () => {
-    this.setState({ links: JSON.parse(localStorage.getItem("list_users")) });
-    //carrega os usuários do localStorage
-  };
-
-  loadUsers = async () => {
-    const response = await api.get("/users", {
-      auth: {
-        username: "testvoxus",
-        password: "258webVOXUS"
-      }
-    });
-
-    this.setState({ users: response.data });
-
-    const { users } = this.state;
-    const result = users.map(user => user.login);
-
-    var collection = [];
-
-    for (const a of result) {
-      const profiles = await api.get(`/users/${a}`, {
-        auth: {
-          username: "testvoxus",
-          password: "258webVOXUS"
-        }
-      });
-      collection.push(profiles.data);
-    }
-    localStorage.setItem("list_users", JSON.stringify(collection));
-    this.setState({ links: JSON.parse(localStorage.getItem("list_users")) });
-    //load dos dados da API do github
-  };
-
- 
 
   render() {
     const { links } = this.state;
